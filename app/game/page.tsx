@@ -9,24 +9,19 @@ import InPlayScreen from './InPlayScreen';
 import Lives from './Lives';
 
 const pages = () => {
-  const numberLives = 2;
   const username = useSearchParams().get('userName') as string;
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const { incorrect, sequence, currentElementIndex, inPlay, finished } = state;
+  const { lives, sequence, currentElementIndex, inPlay, finished } = state;
 
   useEffect(() => {
     if (!inPlay) return;
 
     const timeout = setTimeout(() => {
-      dispatch({ type: ActionType.FINISH_ROUND });
-
-      if (
-        currentElementIndex >= sequence.length - 1 ||
-        incorrect >= numberLives
-      ) {
+      if (currentElementIndex >= sequence.length - 1) {
         dispatch({ type: ActionType.END_GAME });
         return;
       }
+      dispatch({ type: ActionType.FINISH_ROUND });
     }, 2000);
 
     return () => clearTimeout(timeout);
@@ -42,7 +37,8 @@ const pages = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <Lives lives={numberLives} incorrect={incorrect} />
+      <h1 className="text-4xl font-bold">Lives: {lives}</h1>
+      <Lives lives={lives} />
       <InPlayScreen
         sequence={sequence}
         currentElementIndex={currentElementIndex}

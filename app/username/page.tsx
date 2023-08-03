@@ -1,20 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 
 const page = () => {
-  const [name, setName] = useState('');
   const router = useRouter();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    console.log('asasaasa');
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const userName = formData.get('userName') as string;
-    console.log(event.currentTarget);
-    console.log(userName);
-    setName(userName);
     router.push(`/game?userName=${encodeURIComponent(userName)}`);
   };
 

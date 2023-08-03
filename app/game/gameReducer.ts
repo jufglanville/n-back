@@ -1,8 +1,7 @@
-import React, { useEffect, useReducer, useState } from 'react';
-
 const EMOJIS = ['🥳', '🔥', '🚀', '🎸'];
 const SEQUENCE_LENGTH = 15;
 const N_BACK = 2;
+const LIVES = 2;
 
 export enum ActionType {
   START_GAME = 'START_GAME',
@@ -24,7 +23,7 @@ export const initialState = {
   finished: false,
   userSelected: false,
   roundResult: false as boolean | null,
-  incorrect: 0,
+  lives: LIVES,
 };
 
 type StateType = typeof initialState;
@@ -73,15 +72,20 @@ export const gameReducer = (state: StateType, action: Action): StateType => {
       const usersEntry = [...state.usersEntry, userSelected ? 1 : -1];
       const roundResult = userSelected === isCorrect;
 
+      const livesLeft = roundResult ? state.lives : state.lives - 1;
+
       return {
         ...state,
         userSelected: false,
         usersEntry,
         currentElementIndex: currentElementIndex + 1,
         roundResult,
-        incorrect: roundResult ? state.incorrect : state.incorrect + 1,
+        lives: livesLeft,
+        finished: livesLeft === 0 ? true : false,
+        inPlay: livesLeft === 0 ? false : true,
       };
     default:
       return state;
   }
 };
+0;
