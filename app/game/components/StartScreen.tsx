@@ -18,6 +18,7 @@ export const StartScreen = ({ name, dispatch }: Props) => {
       </h1>
 
       <button
+        name="Start Game"
         onClick={handleStartGame}
         className="text-center  text-slate-900 border border-slate-900 rounded py-2 px-4 hover:bg-slate-600 hover:text-slate-100 transition-all"
       >

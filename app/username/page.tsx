@@ -4,7 +4,7 @@ import { FormEvent, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserContext } from '../../context/UserContext';
 
-const page = () => {
+const Username = () => {
   const { setUsername } = useContext(UserContext);
   const router = useRouter();
 
@@ -40,4 +40,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Username;

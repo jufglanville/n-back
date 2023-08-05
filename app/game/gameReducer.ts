@@ -32,7 +32,8 @@ export const initialState = {
 
 type StateType = typeof initialState;
 
-const gameSetup = (): GameRound[] => {
+export const gameSetup = (): GameRound[] => {
+  console.log('gameSetup');
   const gameRoundsArr: GameRound[] = [];
   for (let i = 0; i < SEQUENCE_LENGTH; i++) {
     const sequenceValue =

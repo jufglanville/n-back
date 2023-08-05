@@ -8,7 +8,7 @@ import { InPlayScreen } from './components/InPlayScreen';
 import { Lives } from './components/Lives';
 import { UserContext } from '../../context/UserContext';
 
-const pages = () => {
+const Game = () => {
   const { username } = useContext(UserContext);
   const [state, dispatch] = useReducer(gameReducer, initialState);
   const { lives, gameRounds, currentGameRound, nBack, inPlay, finished } =
@@ -56,4 +56,4 @@ const pages = () => {
   );
 };
 
-export default pages;
+export default Game;

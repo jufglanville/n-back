@@ -74,7 +74,9 @@ export const ResultsScreen = ({
       <p className="text-center mb-2">
         And reached round {currentGameRound - nBack}
       </p>
-      <p className="text-center mb-5">That's a {successRate}% success rate!</p>
+      <p className="text-center mb-5">
+        That&apos;s a {successRate}% success rate!
+      </p>
 
       <h2 className="text-center text-2xl">Results</h2>
       <table className="mb-10">
