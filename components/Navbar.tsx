@@ -5,12 +5,7 @@ import React from 'react';
 export const Navbar = () => {
   return (
     <div className="flex w-full bg-slate-600 p-5 align-middle justify-between">
-      <Image
-        src="/../public/assets/memory.png"
-        alt="logo"
-        width="40"
-        height="40"
-      />
+      <Image src="/assets/memory.png" alt="logo" width="40" height="40" />
       <nav>
         <ul className="flex justify-center align-middle">
           <li className="flex align-middle">
