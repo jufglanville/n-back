@@ -1,7 +1,10 @@
-import Navbar from '@/components/Navbar/Navbar';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import UserProvider from '@/context/UserContext';
+
+import { Navbar } from '@/components/Navbar';
+import { Card } from '@/components/Card';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,13 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-
-        <main className="flex justify-center mx-auto my-10 max-w-xl bg-slate-200 p-10 rounded-md">
-          {children}
-        </main>
-      </body>
+      <UserProvider>
+        <body className={inter.className}>
+          <Navbar />
+          <main className="flex justify-center mx-auto py-10 px-5">
+            <Card>{children}</Card>
+          </main>
+        </body>
+      </UserProvider>
     </html>
   );
 }

@@ -1,4 +1,4 @@
-const EMOJIS = ['🥳', '🔥', '🚀', '🎸'];
+const SEQUENCE_VALUES = ['🥳', '🔥', '🚀', '🎸'];
 const SEQUENCE_LENGTH = 15;
 const N_BACK = 2;
 const LIVES = 2;
@@ -14,38 +14,51 @@ export interface Action {
   type: ActionType;
 }
 
+export type GameRound = {
+  sequenceValue: string;
+  sequenceAnswer: boolean | null;
+  userAnswer: boolean | null;
+};
+
 export const initialState = {
-  sequence: [] as string[],
-  results: [] as number[],
-  usersEntry: [] as number[],
-  currentElementIndex: 0,
+  gameRounds: [] as GameRound[],
+  currentGameRound: 0,
   inPlay: false,
   finished: false,
   userSelected: false,
-  roundResult: false as boolean | null,
   lives: LIVES,
+  nBack: N_BACK,
 };
 
 type StateType = typeof initialState;
 
+const gameSetup = (): GameRound[] => {
+  const gameRoundsArr: GameRound[] = [];
+  for (let i = 0; i < SEQUENCE_LENGTH; i++) {
+    const sequenceValue =
+      SEQUENCE_VALUES[Math.floor(Math.random() * SEQUENCE_VALUES.length)];
+
+    let sequenceAnswer = null;
+    if (i >= N_BACK) {
+      sequenceAnswer =
+        sequenceValue === gameRoundsArr[i - N_BACK].sequenceValue;
+    }
+
+    gameRoundsArr.push({
+      sequenceValue,
+      sequenceAnswer,
+      userAnswer: null,
+    });
+  }
+  return gameRoundsArr;
+};
+
 export const gameReducer = (state: StateType, action: Action): StateType => {
   switch (action.type) {
     case 'START_GAME':
-      const newSequence = Array.from(
-        { length: SEQUENCE_LENGTH },
-        () => EMOJIS[Math.floor(Math.random() * EMOJIS.length)]
-      );
-
-      const results: number[] = [];
-      newSequence.forEach((emoji, i) => {
-        if (i < N_BACK) return;
-        emoji === newSequence[i - N_BACK] ? results.push(1) : results.push(-1);
-      });
-
       return {
         ...initialState,
-        sequence: newSequence,
-        results,
+        gameRounds: gameSetup(),
         inPlay: true,
       };
     case 'END_GAME':
@@ -60,26 +73,27 @@ export const gameReducer = (state: StateType, action: Action): StateType => {
         userSelected: true,
       };
     case 'FINISH_ROUND':
-      const { currentElementIndex, sequence, userSelected } = state;
+      const { gameRounds, currentGameRound, userSelected } = state;
 
       // If the round is under the N_BACK value then we don't need to do anything
-      if (currentElementIndex < N_BACK)
-        return { ...state, currentElementIndex: currentElementIndex + 1 };
+      if (currentGameRound < N_BACK)
+        return {
+          ...state,
+          currentGameRound: currentGameRound + 1,
+        };
 
-      const currentElement = sequence[currentElementIndex];
-      const isCorrect =
-        sequence[currentElementIndex - N_BACK] === currentElement;
-      const usersEntry = [...state.usersEntry, userSelected ? 1 : -1];
-      const roundResult = userSelected === isCorrect;
+      gameRounds[currentGameRound].userAnswer = userSelected;
 
-      const livesLeft = roundResult ? state.lives : state.lives - 1;
+      const livesLeft =
+        userSelected === gameRounds[currentGameRound].sequenceAnswer
+          ? state.lives
+          : state.lives - 1;
 
       return {
         ...state,
+        gameRounds,
         userSelected: false,
-        usersEntry,
-        currentElementIndex: currentElementIndex + 1,
-        roundResult,
+        currentGameRound: currentGameRound + 1,
         lives: livesLeft,
         finished: livesLeft === 0 ? true : false,
         inPlay: livesLeft === 0 ? false : true,
@@ -88,4 +102,3 @@ export const gameReducer = (state: StateType, action: Action): StateType => {
       return state;
   }
 };
-0;

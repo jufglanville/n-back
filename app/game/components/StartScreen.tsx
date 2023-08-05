@@ -1,12 +1,12 @@
 import React, { Dispatch } from 'react';
-import { ActionType, Action } from './gameReducer';
+import { ActionType, Action } from '../gameReducer';
 
 interface Props {
   name: string;
   dispatch: Dispatch<Action>;
 }
 
-const StartScreen = ({ name, dispatch }: Props) => {
+export const StartScreen = ({ name, dispatch }: Props) => {
   const handleStartGame = () => {
     dispatch({ type: ActionType.START_GAME });
   };
@@ -26,5 +26,3 @@ const StartScreen = ({ name, dispatch }: Props) => {
     </div>
   );
 };
-
-export default StartScreen;

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const Navbar = () => {
+export const Navbar = () => {
   return (
     <div className="flex w-full bg-slate-600 p-5 align-middle justify-between">
       <Image
@@ -34,5 +34,3 @@ const Navbar = () => {
     </div>
   );
 };
-
-export default Navbar;

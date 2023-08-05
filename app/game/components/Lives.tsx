@@ -5,7 +5,7 @@ interface Props {
   lives: number;
 }
 
-const Lives = ({ lives }: Props) => {
+export const Lives = ({ lives }: Props) => {
   const remainingLives = Array.from({ length: lives }).map((e, i) => (
     <Image
       key={i}
@@ -18,5 +18,3 @@ const Lives = ({ lives }: Props) => {
 
   return <div className="flex items-center gap-2 mb-5">{remainingLives}</div>;
 };
-
-export default Lives;

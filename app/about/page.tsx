@@ -3,7 +3,7 @@ import React from 'react';
 const About = () => {
   return (
     <div className="flex flex-col">
-      <h1 className="text-3xl mb-5">What is an n-back game?</h1>
+      <h1 className="text-3xl mb-5 text-center">What is an n-back game?</h1>
 
       <p>
         An n-back game is a memory game where you are shown a sequence of items,

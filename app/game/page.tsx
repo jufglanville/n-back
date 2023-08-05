@@ -1,34 +1,42 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
-import React, { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useContext } from 'react';
 import { gameReducer, initialState, ActionType } from './gameReducer';
-import ResultsScreen from './ResultsScreen';
-import StartScreen from './StartScreen';
-import InPlayScreen from './InPlayScreen';
-import Lives from './Lives';
+import { ResultsScreen } from './components/ResultsScreen';
+import { StartScreen } from './components/StartScreen';
+import { InPlayScreen } from './components/InPlayScreen';
+import { Lives } from './components/Lives';
+import { UserContext } from '../../context/UserContext';
 
 const pages = () => {
-  const username = useSearchParams().get('userName') as string;
+  const { username } = useContext(UserContext);
   const [state, dispatch] = useReducer(gameReducer, initialState);
-  const { lives, sequence, currentElementIndex, inPlay, finished } = state;
+  const { lives, gameRounds, currentGameRound, nBack, inPlay, finished } =
+    state;
 
   useEffect(() => {
     if (!inPlay) return;
 
     const timeout = setTimeout(() => {
-      if (currentElementIndex >= sequence.length - 1) {
+      dispatch({ type: ActionType.FINISH_ROUND });
+      if (currentGameRound >= gameRounds.length - 1) {
         dispatch({ type: ActionType.END_GAME });
         return;
       }
-      dispatch({ type: ActionType.FINISH_ROUND });
     }, 2000);
 
     return () => clearTimeout(timeout);
-  }, [currentElementIndex, sequence, inPlay]);
+  }, [currentGameRound, gameRounds, inPlay]);
 
   if (finished) {
-    return <ResultsScreen state={state} dispatch={dispatch} />;
+    return (
+      <ResultsScreen
+        gameRounds={gameRounds}
+        currentGameRound={currentGameRound}
+        nBack={nBack}
+        dispatch={dispatch}
+      />
+    );
   }
 
   if (!inPlay) {
@@ -37,11 +45,11 @@ const pages = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h1 className="text-4xl font-bold">Lives: {lives}</h1>
       <Lives lives={lives} />
       <InPlayScreen
-        sequence={sequence}
-        currentElementIndex={currentElementIndex}
+        gameRounds={gameRounds}
+        currentGameRound={currentGameRound}
+        nBack={nBack}
         dispatch={dispatch}
       />
     </div>

@@ -1,24 +1,26 @@
 'use client';
 
-import React from 'react';
+import { FormEvent, useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import { UserContext } from '../../context/UserContext';
 
 const page = () => {
+  const { setUsername } = useContext(UserContext);
   const router = useRouter();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const userName = formData.get('userName') as string;
-    router.push(`/game?userName=${encodeURIComponent(userName)}`);
+    setUsername(event.currentTarget.userName.value);
+    router.push('/');
   };
 
   return (
     <div>
-      <h1 className="text-2xl ">What should we call you?</h1>
+      <h1 className="text-2xl text-center">What should we call you?</h1>
 
       <form className="flex flex-col p-2" onSubmit={handleSubmit}>
         <input
+          placeholder="Enter your name"
           name="userName"
           type="text"
           required
