@@ -16,14 +16,6 @@ export const Navbar = () => {
               Home
             </Link>
           </li>
-          <li className="flex align-middle">
-            <Link
-              href="/about"
-              className="mx-2 text-slate-300 border rounded py-2 px-4 hover:bg-slate-700 hover:text-slate-100 transition-all"
-            >
-              About
-            </Link>
-          </li>
         </ul>
       </nav>
     </div>

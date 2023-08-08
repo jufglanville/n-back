@@ -37,8 +37,6 @@ const Results = () => {
       return (
         <tr key={index} className="text-center text-sm sm:text-base">
           <td>{gameRound.value}</td>
-          {/* <td>-</td>
-          <td>-</td> */}
           <td>-</td>
         </tr>
       );
@@ -51,8 +49,6 @@ const Results = () => {
         <td>
           {index - 1}. {gameRound.value}
         </td>
-        {/* <td>{}</td>
-        <td>{'not sure'}</td> */}
         <td>{gameRound.userCorrect ? '✅' : '❌'}</td>
       </tr>
     );
@@ -63,12 +59,9 @@ const Results = () => {
       <h1 className="text-center text-4xl mb-5">Game Over</h1>
 
       <p className="text-center mb-2">
-        There were {gameRounds.length - 2} trials in total in this game
+        You got {answers.correct} correct and {answers.inCorrect} wrong and
+        reached round {answers.attempted}
       </p>
-      <p className="text-center mb-2">
-        You got {answers.correct} correct and {answers.inCorrect} wrong
-      </p>
-      <p className="text-center mb-2">And reached round {answers.attempted}</p>
       <p className="text-center mb-5">
         That&apos;s a {successRate}% success rate!
       </p>
@@ -78,8 +71,6 @@ const Results = () => {
         <thead>
           <tr>
             <th className="p-2 text-xs sm:text-base">Round</th>
-            {/* <th className="p-2 text-xs sm:text-base">Your Answer</th>
-            <th className="p-2 text-xs sm:text-base">Correct Answer</th> */}
             <th className="p-2 text-xs sm:text-base">Result</th>
           </tr>
         </thead>

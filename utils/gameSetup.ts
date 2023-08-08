@@ -1,5 +1,4 @@
 const SEQUENCE_VALUES = ['🥳', '🔥', '🚀', '🎸'];
-// const SEQUENCE_VALUES = ['🎸'];
 const SEQUENCE_LENGTH = 15;
 
 export const gameSetup = (): GameRound[] => {
