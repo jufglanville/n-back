@@ -1,10 +1,9 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import UserProvider from '@/context/UserContext';
+import GameProvider from '@/context/GameContext';
 
 import { Navbar } from '@/components/Navbar';
-import { Card } from '@/components/Card';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,14 +19,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <UserProvider>
+      <GameProvider>
         <body className={inter.className}>
           <Navbar />
           <main className="flex justify-center mx-auto py-10 px-5">
-            <Card>{children}</Card>
+            <div className="max-w-xl w-full bg-slate-200 p-5 sm:p-10 rounded-md">
+              {children}
+            </div>
           </main>
         </body>
-      </UserProvider>
+      </GameProvider>
     </html>
   );
 }

@@ -1,12 +1,12 @@
 'use client';
 
 import { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+import { GameContext } from '../context/GameContext';
 
 import Link from 'next/link';
 
 export default function Home() {
-  const { username } = useContext(UserContext);
+  const { username } = useContext(GameContext);
 
   return (
     <div className="flex flex-col align-middle">
@@ -16,7 +16,7 @@ export default function Home() {
         <>
           <p className="text-center mb-5">Welcome back {username}</p>
           <Link
-            href="/game"
+            href="/gameplay"
             className="text-center text-slate-900 border border-slate-900 rounded py-2 px-4 hover:bg-slate-600 hover:text-slate-100 transition-all"
           >
             Lets Play!

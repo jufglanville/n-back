@@ -2,10 +2,10 @@
 
 import { FormEvent, useContext } from 'react';
 import { useRouter } from 'next/navigation';
-import { UserContext } from '../../context/UserContext';
+import { GameContext } from '../../context/GameContext';
 
 const Username = () => {
-  const { setUsername } = useContext(UserContext);
+  const { setUsername } = useContext(GameContext);
   const router = useRouter();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
