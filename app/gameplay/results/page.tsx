@@ -1,8 +1,8 @@
 'use client';
 
 import { useContext } from 'react';
-import { GameContext } from '../../../context/GameContext';
 import Link from 'next/link';
+import { GameContext } from '../../../context/GameContext';
 
 const Results = () => {
   const { gameRounds } = useContext(GameContext);

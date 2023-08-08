@@ -1,8 +1,8 @@
 'use client';
 
-import { gameSetup } from '@/utils/gameSetup';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { gameSetup } from '@/utils/gameSetup';
 import { GameContext } from '../../context/GameContext';
 import { Lives } from './components/Lives';
 
