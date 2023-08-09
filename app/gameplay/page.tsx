@@ -62,7 +62,7 @@ const GamePlay = () => {
     userSelectedRef.current = true;
   };
 
-  if (!gameRounds.length) {
+  if (!gameRounds || !gameRounds.length) {
     return <div>Loading...</div>;
   }
 
