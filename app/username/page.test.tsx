@@ -4,7 +4,6 @@ import '@testing-library/jest-dom';
 import GameProvider, { GameContext } from '@/context/GameContext';
 
 import Username from './page';
-import { useContext } from 'react';
 
 const mockRouterPush = jest.fn();
 
