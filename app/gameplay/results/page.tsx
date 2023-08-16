@@ -55,9 +55,15 @@ const Results = () => {
         </thead>
         <tbody>
           {gameRounds
-            .slice(0, answers.attempted)
+            .slice(0, answers.attempted + 2)
             .map((gameRound: GameRound, index: number) => {
-              return <GameRoundResult gameRound={gameRound} index={index} />;
+              return (
+                <GameRoundResult
+                  key={index}
+                  gameRound={gameRound}
+                  index={index}
+                />
+              );
             })}
         </tbody>
       </table>

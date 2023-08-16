@@ -13,8 +13,19 @@ const GamePlay = () => {
   const { gameRounds, setGameRounds } = useContext(GameContext);
 
   const router = useRouter();
+  const mockGameRounds = [
+    { value: 'a', userCorrect: null },
+    { value: 'b', userCorrect: null },
+    { value: 'c', userCorrect: null },
+    { value: 'd', userCorrect: null },
+    { value: 'c', userCorrect: null },
+  ];
 
   useEffect(() => {
+    if (window.Cypress) {
+      setGameRounds(mockGameRounds);
+      return;
+    }
     setGameRounds(gameSetup());
   }, []);
 
