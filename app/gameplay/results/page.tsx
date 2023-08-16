@@ -3,6 +3,7 @@
 import { useContext } from 'react';
 import Link from 'next/link';
 import { GameContext } from '../../../context/GameContext';
+import { GameRoundResult } from './components/GameRoundResult';
 
 const Results = () => {
   const { gameRounds } = useContext(GameContext);
@@ -32,28 +33,6 @@ const Results = () => {
     (answers.correct / (answers.correct + answers.inCorrect)) * 100
   );
 
-  const gameResults = gameRounds.map((gameRound: GameRound, index: number) => {
-    if (index < 2) {
-      return (
-        <tr key={index} className="text-center text-sm sm:text-base">
-          <td>{gameRound.value}</td>
-          <td>-</td>
-        </tr>
-      );
-    }
-
-    if (gameRound.userCorrect === null) return;
-
-    return (
-      <tr key={index} className="text-center text-sm sm:text-base">
-        <td>
-          {index - 1}. {gameRound.value}
-        </td>
-        <td>{gameRound.userCorrect ? '✅' : '❌'}</td>
-      </tr>
-    );
-  });
-
   return (
     <div className="flex flex-col align-middle">
       <h1 className="text-center text-4xl mb-5">Game Over</h1>
@@ -74,7 +53,11 @@ const Results = () => {
             <th className="p-2 text-xs sm:text-base">Result</th>
           </tr>
         </thead>
-        <tbody>{gameResults}</tbody>
+        <tbody>
+          {gameRounds.map((gameRound: GameRound, index: number) => {
+            return <GameRoundResult gameRound={gameRound} index={index} />;
+          })}
+        </tbody>
       </table>
 
       <Link
