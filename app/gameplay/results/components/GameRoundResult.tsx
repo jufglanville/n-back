@@ -13,8 +13,6 @@ export const GameRoundResult = ({ gameRound, index }: Props) => {
     );
   }
 
-  if (gameRound.userCorrect === null) return null;
-
   return (
     <tr key={index} className="text-center text-sm sm:text-base">
       <td>

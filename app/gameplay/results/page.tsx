@@ -54,9 +54,11 @@ const Results = () => {
           </tr>
         </thead>
         <tbody>
-          {gameRounds.map((gameRound: GameRound, index: number) => {
-            return <GameRoundResult gameRound={gameRound} index={index} />;
-          })}
+          {gameRounds
+            .slice(0, answers.attempted)
+            .map((gameRound: GameRound, index: number) => {
+              return <GameRoundResult gameRound={gameRound} index={index} />;
+            })}
         </tbody>
       </table>
 
