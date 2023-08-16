@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+import { render, mockRender } from '@/test-utils';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import GameProvider, { GameContext } from '@/context/GameContext';
 
 import Username from './page';
 
@@ -13,44 +13,23 @@ jest.mock('next/navigation', () => ({
   }),
 }));
 
-const renderUsername = () => {
-  return render(
-    <GameProvider>
-      <Username />
-    </GameProvider>
-  );
-};
-
 describe('Username', () => {
   it('should render the username page', () => {
-    renderUsername();
+    render(<Username />);
 
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
-  it('should run setUsername with the value of the input when the form is submitted', () => {
+  it('should run setUsername with the value of the input when the form is submitted', async () => {
     const user = userEvent.setup();
     const mockSetUsername = jest.fn();
 
-    const mockContextValue = {
-      username: '',
-      gameRounds: [],
-      setUsername: mockSetUsername,
-      setGameRounds: jest.fn(),
-    };
+    mockRender(<Username />, { setUsername: mockSetUsername });
 
-    render(
-      <GameContext.Provider value={mockContextValue}>
-        <Username />
-      </GameContext.Provider>
-    );
+    await user.type(screen.getByRole('textbox'), 'test');
+    await user.click(screen.getByRole('button', { name: /enter/i }));
 
-    user.type(screen.getByRole('textbox'), 'test');
-    user.click(screen.getByRole('button', { name: /enter/i }));
-
-    waitFor(() => {
-      expect(mockSetUsername).toHaveBeenCalledWith('test');
-      expect(mockRouterPush).toHaveBeenCalledWith('/');
-    });
+    expect(mockSetUsername).toHaveBeenCalledWith('test');
+    expect(mockRouterPush).toHaveBeenCalledWith('/');
   });
 });

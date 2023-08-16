@@ -1,16 +1,17 @@
 'use client';
 
-import { FormEvent, useContext } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { GameContext } from '../../context/GameContext';
 
 const Username = () => {
-  const { setUsername } = useContext(GameContext);
+  const [username, setUsername] = useState('');
+  const { setUsername: setContextUsername } = useContext(GameContext);
   const router = useRouter();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setUsername(event.currentTarget.userName.value);
+    setContextUsername(username);
     router.push('/');
   };
 
@@ -27,6 +28,8 @@ const Username = () => {
           minLength={3}
           maxLength={20}
           className="mb-5 bg-white border border-slate-700 rounded py-2 px-4"
+          onChange={(event) => setUsername(event.target.value)}
+          value={username}
         />
 
         <button

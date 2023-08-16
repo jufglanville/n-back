@@ -1,7 +1,7 @@
-import { render, screen, act } from '@testing-library/react';
+import { screen, act } from '@testing-library/react';
+import { render } from '@/test-utils';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import GameProvider from '../../context/GameContext';
 import GamePlay from './page';
 
 const mockRouterPush = jest.fn();
@@ -24,18 +24,9 @@ jest.mock('../../utils/gameSetup', () => ({
   gameSetup: () => mockGameRounds,
 }));
 
-const renderGamePlay = () => {
-  return render(
-    <GameProvider>
-      <GamePlay />
-    </GameProvider>
-  );
-};
-
 describe('GamePlay', () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    renderGamePlay();
   });
 
   afterEach(() => {
@@ -43,12 +34,12 @@ describe('GamePlay', () => {
   });
 
   it('should render the game play page with initial set up screens', () => {
+    render(<GamePlay />);
+
     expect(screen.getByText(/get ready/i)).toBeInTheDocument();
     expect(screen.getByText(mockGameRounds[0].value)).toBeInTheDocument();
     expect(screen.getByText(/2/i)).toBeInTheDocument();
-  });
 
-  it('should render the next value after 2 seconds', async () => {
     act(() => jest.advanceTimersByTime(2500));
 
     expect(screen.getByText(/get ready/i)).toBeInTheDocument();
@@ -57,6 +48,8 @@ describe('GamePlay', () => {
   });
 
   it('should render a button on the first round', async () => {
+    render(<GamePlay />);
+
     act(() => jest.advanceTimersByTime(2500));
     act(() => jest.advanceTimersByTime(2500));
 
@@ -66,6 +59,8 @@ describe('GamePlay', () => {
 
   it('should lose a life if user gets incorrect answer', async () => {
     const user = userEvent.setup({ delay: null });
+
+    render(<GamePlay />);
 
     act(() => jest.advanceTimersByTime(2500));
     act(() => jest.advanceTimersByTime(2500));
@@ -81,6 +76,8 @@ describe('GamePlay', () => {
 
   it('should navigate to the results page when the user loses all lives', async () => {
     const user = userEvent.setup({ delay: null });
+
+    render(<GamePlay />);
 
     act(() => jest.advanceTimersByTime(2500));
     act(() => jest.advanceTimersByTime(2500));
@@ -100,6 +97,8 @@ describe('GamePlay', () => {
 
   it('should navigate to the results page when the user completes all rounds', async () => {
     const user = userEvent.setup({ delay: null });
+
+    render(<GamePlay />);
 
     act(() => jest.advanceTimersByTime(2500));
     act(() => jest.advanceTimersByTime(2500));

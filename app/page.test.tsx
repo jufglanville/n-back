@@ -1,17 +1,12 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { screen } from '@testing-library/react';
+import { render, mockRender } from '@/test-utils';
 import '@testing-library/jest-dom';
-import GameProvider, { GameContext } from '@/context/GameContext';
 
 import Home from './page';
 
 describe('Home page', () => {
   it('should render the enter a username button if no username set', () => {
-    render(
-      <GameProvider>
-        <Home />
-      </GameProvider>
-    );
+    render(<Home />);
 
     expect(
       screen
@@ -21,18 +16,7 @@ describe('Home page', () => {
   });
 
   it('should render the welcome back message if a username is set', () => {
-    render(
-      <GameContext.Provider
-        value={{
-          gameRounds: [],
-          setGameRounds: () => {},
-          username: 'Test',
-          setUsername: (username: string) => {},
-        }}
-      >
-        <Home />
-      </GameContext.Provider>
-    );
+    mockRender(<Home />, { username: 'Test' });
 
     expect(screen.getByText(/welcome back test/i)).toBeInTheDocument();
 
