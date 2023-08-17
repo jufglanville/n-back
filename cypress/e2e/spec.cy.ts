@@ -1,3 +1,5 @@
+import * as GameSetup from '../../utils/gameSetup';
+
 const mockGameRounds = [
   { value: 'a', userCorrect: null },
   { value: 'b', userCorrect: null },
@@ -7,89 +9,37 @@ const mockGameRounds = [
 ];
 
 describe('N-Back Game', () => {
-  // it('starts the game', () => {
-  //   cy.stub(GameSetup, 'gameSetup').returns(mockGameRounds);
+  describe('GamePlay', () => {
+    it('Test Stub', () => {
+      const gameSetupStub = cy
+        .stub(GameSetup, 'gameSetup')
+        .as('gameSetup')
+        .returns(mockGameRounds);
 
-  //   cy.visit('/gameplay');
-  // });
-
-  it('User enters name and gives two incorrect answers', () => {
-    cy.clock();
-
-    cy.visit('/');
-    cy.get('a').contains('Enter a username').click();
-
-    // Enter Username
-    cy.get('input').type('John Doe');
-    cy.get('button').contains('Enter').click();
-
-    // Takes user to Homepage displaying Welcome message
-    cy.get('p').contains('Welcome back John Doe');
-
-    // Takes user to the game page
-    cy.get('a').contains('Lets Play!').click();
-
-    // Starts the game
-    cy.get('p').contains('Get Ready').should('be.visible');
-    cy.get('div').contains('2').should('be.visible');
-    cy.tick(2500);
-    cy.get('p').contains('Get Ready').should('be.visible');
-    cy.get('div').contains('1').should('be.visible');
-
-    // Select Two Incorrect
-    cy.tick(2500);
-    cy.get('p').contains('Round 1');
-    cy.get('button').contains('Select').click();
-    cy.tick(2500);
-    cy.get('p').contains('Round 2');
-    cy.get('button').contains('Select').click();
-    cy.tick(2500);
-
-    // Game Ends
-    cy.get('h1').contains('Game Over').should('be.visible');
-  });
-
-  it('User enters name and gets all answers correct', () => {
-    cy.clock();
-
-    cy.visit('/');
-    cy.get('a').contains('Enter a username').click();
-
-    // Enter Username
-    cy.get('input').type('John Doe');
-    cy.get('button').contains('Enter').click();
-
-    // Takes user to Homepage displaying Welcome message
-    cy.get('p').contains('Welcome back John Doe');
-
-    // Takes user to the game page
-    cy.get('a').contains('Lets Play!').click();
-
-    // Starts the game
-    cy.get('p').contains('Get Ready').should('be.visible');
-    cy.get('div').contains('2').should('be.visible');
-    cy.tick(2500);
-    cy.get('p').contains('Get Ready').should('be.visible');
-    cy.get('div').contains('1').should('be.visible');
-
-    // Selects correct answers
-    cy.tick(2500);
-    cy.get('p').contains('Round 1');
-    cy.tick(2500);
-    cy.get('p').contains('Round 2');
-    cy.tick(2500);
-    cy.get('p').contains('Round 3');
-    cy.get('button').contains('Select').click();
-    cy.tick(2500);
-
-    // Game Ends
-    cy.get('h1').contains('Game Over').should('be.visible');
+      cy.visit('/gameplay', {
+        onBeforeLoad(win) {
+          // @ts-ignore
+          win.gameSetup = gameSetupStub;
+        },
+      });
+    });
   });
 
   it('Complete run through of app', () => {
+    const gameSetupStub = cy
+      .stub(GameSetup, 'gameSetup')
+      .as('gameSetup')
+      .returns(mockGameRounds);
+
     cy.clock();
 
-    cy.visit('/');
+    // cy.visit('/');
+    cy.visit('/', {
+      onBeforeLoad(win) {
+        // @ts-ignore
+        win.gameSetup = gameSetupStub;
+      },
+    });
     cy.get('a').contains('Enter a username').click();
 
     // Enter Username

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { gameSetup } from '@/utils/gameSetup';
+import { gameSetup } from '@/utils/gameSetup'; // Comment out to get Cypress to correctly stub function
 import { GameContext } from '../../context/GameContext';
 import { Lives } from './components/Lives';
 
@@ -13,19 +13,8 @@ const GamePlay = () => {
   const { gameRounds, setGameRounds } = useContext(GameContext);
 
   const router = useRouter();
-  const mockGameRounds = [
-    { value: 'a', userCorrect: null },
-    { value: 'b', userCorrect: null },
-    { value: 'c', userCorrect: null },
-    { value: 'd', userCorrect: null },
-    { value: 'c', userCorrect: null },
-  ];
 
   useEffect(() => {
-    if (window.Cypress) {
-      setGameRounds(mockGameRounds);
-      return;
-    }
     setGameRounds(gameSetup());
   }, []);
 
