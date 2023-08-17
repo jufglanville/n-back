@@ -13,7 +13,6 @@ describe('N-Back Game', () => {
     it('Test Stub', () => {
       const gameSetupStub = cy
         .stub(GameSetup, 'gameSetup')
-        .as('gameSetup')
         .returns(mockGameRounds);
 
       cy.visit('/gameplay', {
@@ -28,7 +27,6 @@ describe('N-Back Game', () => {
   it('Complete run through of app', () => {
     const gameSetupStub = cy
       .stub(GameSetup, 'gameSetup')
-      .as('gameSetup')
       .returns(mockGameRounds);
 
     cy.clock();
