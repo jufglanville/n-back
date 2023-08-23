@@ -27,10 +27,6 @@ const mockGameRounds = [
   data: mockGameRounds,
 });
 
-jest.mock('../../utils/gameSetup', () => ({
-  gameSetup: () => mockGameRounds,
-}));
-
 describe('GamePlay', () => {
   beforeEach(() => {
     jest.useFakeTimers();
