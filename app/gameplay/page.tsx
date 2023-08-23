@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { gameSetup } from '@/utils/gameSetup'; // Comment out to get Cypress to correctly stub function
 import { GameContext } from '../../context/GameContext';
 import { Lives } from './components/Lives';
+import axios from 'axios';
 
 const GamePlay = () => {
   const [lifeCount, setLifeCount] = useState(2);
@@ -15,7 +16,12 @@ const GamePlay = () => {
   const router = useRouter();
 
   useEffect(() => {
-    setGameRounds(gameSetup());
+    const setupGameRounds = async () => {
+      const res = await axios.get<GameRound[]>('/api/gamesetup');
+      setGameRounds(res.data);
+    };
+
+    setupGameRounds();
   }, []);
 
   useEffect(() => {
