@@ -9,35 +9,17 @@ const mockGameRounds = [
 ];
 
 describe('N-Back Game', () => {
-  describe('GamePlay', () => {
-    it('Test Stub', () => {
-      const gameSetupStub = cy
-        .stub(GameSetup, 'gameSetup')
-        .returns(mockGameRounds);
-
-      cy.visit('/gameplay', {
-        onBeforeLoad(win) {
-          // @ts-ignore
-          win.gameSetup = gameSetupStub;
-        },
-      });
-    });
-  });
-
   it('Complete run through of app', () => {
-    const gameSetupStub = cy
-      .stub(GameSetup, 'gameSetup')
-      .returns(mockGameRounds);
-
     cy.clock();
 
-    // cy.visit('/');
-    cy.visit('/', {
-      onBeforeLoad(win) {
-        // @ts-ignore
-        win.gameSetup = gameSetupStub;
-      },
+    cy.intercept('GET', '/api/gamesetup', (req) => {
+      req.reply({
+        body: mockGameRounds,
+      });
     });
+
+    // Visits the homepage
+    cy.visit('/');
     cy.get('a').contains('Enter a username').click();
 
     // Enter Username
