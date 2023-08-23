@@ -1,5 +1,3 @@
-import * as GameSetup from '../../utils/gameSetup';
-
 const mockGameRounds = [
   { value: 'a', userCorrect: null },
   { value: 'b', userCorrect: null },
